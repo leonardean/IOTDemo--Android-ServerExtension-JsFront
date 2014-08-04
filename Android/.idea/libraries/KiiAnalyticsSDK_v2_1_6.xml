@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="KiiAnalyticsSDK-v2.1.6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/KiiAnalyticsSDK-v2.1.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/KiiCloudv2.1.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/graphview-3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

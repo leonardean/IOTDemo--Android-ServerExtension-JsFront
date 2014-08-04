@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.11.1.min.js" ></script>
+<script src="KiiSDK2.1-KiiSDK.js"  ></script>
+<script src="kiiAnalytics.js" ></script>
+<script src="wearableAnalytics.js" ></script>
+<script>
+
+//Kii Cloud SDK Initialization
+var app_id="fae4ad0e";
+var app_key="e7fa21afa64886180e52e1006aa41575";
+Kii.initializeWithSite(app_id, app_key, KiiSite.US);
+
+function doUserAnalytics() {
+  var analytics = new WearableAnalytics("uv");
+  analytics.setUser("steven")
+    .setSummary("daily")
+    .doAnalytics(function (line) {
+      for (i in line) {
+        console.log("date:" + line[i].name + " val:" + line[i].value);
+      }
+    });
+};
+
+function doAnalytics() {
+  //get input
+  var analytics = new WearableAnalytics($("#group").val());
+  var sele = $(":radio[name='filterType']:checked").val();
+
+  //set filter value
+  if (sele == "username") {
+    analytics.setUser($("#filterValue").val());
+  } else if (sele == "deviceID") {
+    analytics.setDeviceID($("#filterValue").val());
+  }
+
+  //set start and end date
+  if ($("#startDate").val() != "" ||
+    $("#endDate").val() != "") {
+    analytics.setFormatPeriod(
+      $("#startDate").val(),
+      $("#endDate").val());
+  }
+
+  analytics.setSummary($("#summaryType").val())
+    .doAnalytics(
+    function (line) {
+      $("#result").empty();
+      for (i in line) {
+        var text = "date:" + getSimpleDate(line[i].name) + " value:" + line[i].value;
+        $("#result").append($("<p></p>").text(text));
+      }
+    });
+}
+
+</script>
+</head>
+<body>
+<p><label>analaytics </label>
+
+<form>
+  <li><label>valueType</label><select id="group">
+    <option>uv</option>
+    <option>temperature</option>
+    <option>humidity</option>
+  </select>
+  <li><label>summaryType</label>
+    <select id="summaryType">
+      <option>daily</option>
+      <option>weekly</option>
+      <option>monthly</option>
+    </select>
+  <li><label>filter Type</label>
+    <input type="radio" name="filterType" value="username" default/>username
+    <input type="radio" name="filterType" value="deviceID"/>deviceID
+    <input type="radio" name="filterType" value="all">
+    All
+  <li>
+    <label>filter value</label>
+    <input type="text" id="filterValue" placeholder="alice (user) or device3 (7C:66:9D:89:A6:60)"/>
+  <li>
+    <label>startDate</label>
+      <input type="text" id="startDate" placeholder="yyyy-MM-dd"/>
+      <li><label>endDate</label>
+        <input type="text" id="endDate" placeholder="yyyy-MM-dd"/>
+
+</form>
+<input type="button" onclick="doAnalytics()" value="doAnalytics"/>
+
+<div id="result">
+</div>
+</body>
+</html>

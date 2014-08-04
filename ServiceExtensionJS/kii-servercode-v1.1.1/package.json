@@ -1,0 +1,30 @@
+{
+  "name": "kii-servercode",
+  "version": "1.1.1",
+  "engines": [
+    "node >=0.10.11"
+  ],
+  "description": "Kii command line toolkit - server code",
+  "author": "Kii <support@kii.com> (http://www.kii.com)",
+  "dependencies": {
+    "commander": "1.2.0",
+    "nodeutil": "0.0.27"
+  },
+  "devDependencies": {
+    "mocha": "1.17.1",
+    "should": "3.1.2",
+    "execSync": "1.0.1-pre"
+  },
+  "keywords": [
+    "kii",
+    "command",
+    "shell",
+    "servercode"
+  ],
+  "scripts": {
+    "test": "make test"
+  },
+  "bin": {
+    "kii-servercode": "./bin/kii-servercode.js"
+  }
+}

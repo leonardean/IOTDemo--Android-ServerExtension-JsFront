@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="jquery-1.11.1.min.js"></script>
+  <script src="KiiSDK2.1-KiiSDK.js"></script>
+  <script src="geoQuery.js"></script>
+  <script>
+    var app_id = "fae4ad0e";
+    var app_key = "e7fa21afa64886180e52e1006aa41575";
+    Kii.initializeWithSite(app_id, app_key, KiiSite.US);
+
+    function changeType() {
+      var sele = $(":radio[name='geoType']:checked").val();
+      $("[tag]").hide();
+      if (sele == "circle") {
+        $("[tag='geo']").show();
+        $("[tag='radius']").show();
+      } else if (sele == "box") {
+        $("[tag='geo']").show();
+        $("[tag='box']").show();
+      } else {
+        $("[tag='id']").show();
+      }
+    }
+
+    function doGeoQuery() {
+      var sele = $(":radio[name='geoType']:checked").val();
+      if (sele == "circle") {
+        var query = new DeviceGeoQuery(user);
+        var latitude = $("#latitude").val();
+        var longitude = $("#longitude").val();
+        query.setCenterPoint(latitude, longitude);
+        query.setRadius($("#radius").val());
+      } else if (sele == "box") {
+        var query = new DeviceGeoQuery(user);
+        query.setEastNorth($("#enLat").val(), $("#enLon").val());
+        query.setWestSouth($("#wsLat").val(), $("#wsLon").val());
+      } else {
+        var query = new DeviceQuery(user);
+        query.setDeviceID($("#deviceID").val());
+      }
+
+      $("#resultTable > tbody").empty();
+
+      query.doQuery(function (line, option) {
+        var tr = $("<tr></tr>");
+        tr.append($("<td>").text(line.location.lat));
+        tr.append($("<td>").text(line.location.lon));
+        tr.append($("<td>").text(line.uv));
+        tr.append($("<td>").text(line.temperature));
+        tr.append($("<td>").text(line.humidity));
+        tr.append($("<td>").text(line.created));
+        tr.append($("<td>").text(line.deviceID));
+
+        if (option) {
+          tr.append($("<td>").text(option));
+        }
+
+        $("#resultTable > tbody").append(tr);
+
+      });
+
+    }
+
+    function loginAdmin() {
+      var clientID = "19192fd6a503ba38c117a683edd87bf6";
+      var secret = "f11b918a16129fd5d84cfc4084cda45f9fd29cce708474aa6923bd528bad9d66";
+
+      Kii.authenticateAsAppAdmin(clientID, secret, {
+          success: function (theAdmin) {
+            user = theAdmin.userWithID("d63ae090-fda9-11e3-b94b-22000afc2bc2");
+            $("#queryForm").show();
+            $("[tag]").hide();
+            $("[tag='geo']").show();
+            $("[tag='box']").show();
+          },
+          failure: function (theUser, anErrorString) {
+            $("#result").append($("<p></p>").text(anErrorString)); } } );
+    }
+
+    function login() {
+      var userID = $("#userID").val();
+      var pwd = $("#pwd").val();
+
+      KiiUser.authenticate(userID, pwd, {
+          success: function (theAuthedUser) {
+            user = theAuthedUser;
+            $("#queryForm").show();
+            $("[tag]").hide();
+            $("[tag='geo']").show();
+            $("[tag='box']").show();
+          },
+          failure: function (theUser, anErrorString) {
+            $("#result").append($("<p></p>").text(anErrorString)); } } );
+    }
+  </script>
+</head>
+<body>
+<li><label>loginName or email</label>
+  <input type="text" id="userID" placeholder="alice or abx@cc.com"/>
+<li><label>password</label>
+  <input type="text" id="pwd"/>
+<li><input type="button" onclick="login()" value="login"/>
+  <input type="button" onclick="loginAdmin()" value="admin(as abx@cc.com)">
+  <div id="queryForm">
+    <p><label>device geo query</label>
+    <form>
+      <li><label>geoQuerytType</label>
+        <input onchange="changeType()" type="radio" name="geoType" value="box" checked/>box
+        <input onchange="changeType()" type="radio" name="geoType" value="circle"/>circle
+        <input onchange="changeType()" type="radio" name="geoType" value="deviceID"/>deviceID
+      <li tag="radius"><label>latitude</label>
+        <input type="text" id="latitude" placeholder="25.0"/>
+      <li tag="radius"><label>longitude</label>
+        <input type="text" id="longitude" placeholder="121.0"/>
+      <li tag="radius"><label>radius(m)</label>
+        <input type="text" id="radius" placeholder="10000"/>
+      <li tag="box"><label>east-north:latitude</label>
+        <input type="text" id="enLat" placeholder="25.0"/>
+      <li tag="box"><label>east-north:longitude</label>
+        <input type="text" id="enLon" placeholder="121.0"/>
+      <li tag="box"><label>west-south:latitude</label>
+        <input type="text" id="wsLat" placeholder="24.0"/>
+      <li tag="box"><label>west-south:longitude</label>
+        <input type="text" id="wsLon" placeholder="122.0"/>
+      <li tag="id"><label>deviceID</label>
+        <input type="text" id="deviceID" placeholder="device1"/>
+    </form>
+    <input type="button" onclick="doGeoQuery()" value="doGeoQuery"/>
+  </div>
+  <div id="result">
+    <table id="resultTable">
+      <thead>
+      <tr>
+        <th>lat</th>
+        <th>long</th>
+        <th>uv</th>
+        <th>temp</th>
+        <th>humidity</th>
+        <th>createDate</th>
+        <th>deviceID</th>
+        <th>distance</th>
+      </tr>
+      <thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</body>
+<script>
+  $("#queryForm").hide();
+</script>
+</html>

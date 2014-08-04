@@ -1,0 +1,14 @@
+{
+  "kiicloud://users/*/buckets/wdDataRecord": [
+  {
+    "when":"DATA_OBJECT_CREATED",
+    "what":"EXECUTE_SERVER_CODE",
+    "endpoint":"modifyRecord"
+  }],
+  "kiicloud://users": [
+  {
+    "when": "USER_CREATED",
+    "what": "EXECUTE_SERVER_CODE",
+    "endpoint": "modifyBucketACL"
+  }]
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+    >
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/log_out"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:id="@+id/log_out"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_data"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:id="@+id/add_new_data"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_all_my_data"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:id="@+id/show_all_my_data"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/daily_chart"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:id="@+id/daily_chart"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weekly_chart"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:id="@+id/weekly_chart"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/monthly_chart"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:id="@+id/monthly_chart"/>
+
+
+
+</LinearLayout>
+
