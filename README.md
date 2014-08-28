@@ -14,7 +14,7 @@ There are three demos in each folder in this repo:
 
 When adding new data, the app includes: temperature, humidity、UV、Device ID, Geo-location. If you want to use the app for your own KiiCloud service, you need to change `APP_ID`, `APP_KEY` in `Constants.java` and  `Kii.Site`, `KiiAnalytics.Site` in `DemoApplication.java`.
 
-`ServerExtension` folder contains a hook config file `./deploy/wdRecord.hook` and a server function js file `modifyWdRecord.js`. You need to install [Node](http://nodejs.org/) first in order to deploy the two files to Kii Cloud with the following command:
+`ServerExtension` folder contains a hook config file `./deploy/wdRecord.hook` and a server function js file `modifyWdRecord.js`. You need to install [Nodejs](http://nodejs.org/) first in order to deploy the two files to Kii Cloud with the following command:
 ```
 node bin/kii-servercode.js deploy-file \
   --file <js_function_file> \
@@ -24,9 +24,8 @@ node bin/kii-servercode.js deploy-file \
   --client-id <your_client_id> \
   --client-secret <your_client_secret> \
   --hook-config <hook_file>
-
 ```
 
-`JsFront` contains two html pages and javascript files showing how to retrieve analytics results.
+`JsFront` contains two html pages and javascript files showing how to retrieve analytics results. Please note that there are difference between the demo js code and the code snippet in the IOT blueprint documentaion because the demo code need to take care of user inputs and dynamic REST request generation while the code snippet only shows a fixed request.
 
 
